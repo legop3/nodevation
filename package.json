@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "launchpad-mini": "^2.3.3"
+    "launchpad-mini": "^2.3.3",
+    "node-cron": "^3.0.0"
   }
 }
