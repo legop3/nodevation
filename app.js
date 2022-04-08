@@ -5,8 +5,8 @@ var cron = require('node-cron')
 
 const setbuttons = {
     'buttonset':[
-        {'x':0, 'y':7, 'name':'blinktest', 'color':pad.yellow,'blink':pad.yellow.low,'currentcolor':null},
-        {'x':0, 'y':6, 'name':'notesting', 'color':pad.green.low,'blink':pad.green,'currentcolor':null},
+        {'x':0, 'y':7, 'name':'blinktest', 'color':pad.yellow,'blink':pad.red,'currentcolor':null},
+        {'x':0, 'y':6, 'name':'blink2', 'color':pad.green.low,'blink':pad.green,'currentcolor':null},
         {'x':6,'y':7,'name':'deafen','color':pad.red,'blink':pad.green,'currentcolor':null},
         {'x':6,'y':6,'name':'mute','color':pad.red,'blink':pad.green,'currentcolor':null},
         {'x':5,'y':7,'name':'tempdeafen','color':pad.red.low,'blink':pad.yellow,'currentcolor':null},
@@ -66,8 +66,17 @@ buttoncolorer()
                         get("http://localhost:6969/deafen")
                         switchcolor(k, element)
                     }
+
+                    if(element.name == 'blinktest'){
+                        setInterval(switchcolor, 1000, k, element)
+                    }
+
+                    if(element.name == 'blink2'){
+                        setInterval(switchcolor, 100, k, element)
+                    }
                 ///////////////////////////////////////////////
                 }
+
 
 
                 if(!k.pressed) { //runs when you up the button
@@ -83,7 +92,6 @@ buttoncolorer()
                 //////////////////////////////////////////////
                 if(element.name == 'tempmute'){
                     get("http://localhost:6969/mute")
-                    // pad.col(element.blink, k)
                     switchcolor(k, element)
                 }
 
@@ -100,7 +108,7 @@ buttoncolorer()
             // console.log(k)
             // console.log(element)
             // console.log(pad.col(k))
-            console.log(k)
+            console.log(k, element)
 
             if(element.currentcolor == element.color) {
                 pad.col(element.blink, k)
@@ -109,50 +117,17 @@ buttoncolorer()
                 pad.col(element.color, k)
                 element.currentcolor = element.color
             }
-
-        
-
-        function blinker(k, element, timeout, enable) {
-            if(enable == true){
-                setTimeout(() => {
-                
-                }, timeout);
-            }
-
-        }
-
-
-        
-            
         }
 
 
 
-        // pad.col(pad.green, pad.pressedButtons)
-        // if(pad.isPressed([6,6])) {
-        //     console.log('mute')
-        //     get("http://localhost:6969/mute")
-        //     // flashing = !flashing
-        // }
-
-        // if(pad.isPressed([6,7])){
-        //     console.log('deafen')
-        //     // flashing = !flashing
-        //     get("http://localhost:6969/deafen")
-        // }
 
 
-        
 
-        // pad.flash = flashing
+
+
+
+
     } );
-
-
-
-
-
-
-
-
 } );
 
