@@ -1,16 +1,16 @@
 const { get } = require('http');
 const Launchpad = require( 'launchpad-mini' ),
 pad = new Launchpad();
-var cron = require('node-cron')
+const { TaskTimer } = require('tasktimer')
 
 const setbuttons = {
     'buttonset':[
-        {'x':0, 'y':7, 'name':'blinktest', 'color':pad.yellow,'blink':pad.red,'currentcolor':null},
-        {'x':0, 'y':6, 'name':'blink2', 'color':pad.green.low,'blink':pad.green,'currentcolor':null},
-        {'x':6,'y':7,'name':'deafen','color':pad.red,'blink':pad.green,'currentcolor':null},
-        {'x':6,'y':6,'name':'mute','color':pad.red,'blink':pad.green,'currentcolor':null},
-        {'x':5,'y':7,'name':'tempdeafen','color':pad.red.low,'blink':pad.yellow,'currentcolor':null},
-        {'x':5,'y':6,'name':'tempmute','color':pad.red.low,'blink':pad.yellow,'currentcolor':null}
+        {'x':0, 'y':7, 'name':'blinktest', 'color':pad.yellow,'blink':pad.red,'currentcolor':null,'blink':false},
+        {'x':0, 'y':6, 'name':'blink2', 'color':pad.green.low,'blink':pad.green,'currentcolor':null,'blink':false},
+        {'x':6,'y':7,'name':'deafen','color':pad.red,'blink':pad.green,'currentcolor':null,'blink':false},
+        {'x':6,'y':6,'name':'mute','color':pad.red,'blink':pad.green,'currentcolor':null,'blink':false},
+        {'x':5,'y':7,'name':'tempdeafen','color':pad.red.low,'blink':pad.yellow,'currentcolor':null,'blink':false},
+        {'x':5,'y':6,'name':'tempmute','color':pad.red.low,'blink':pad.yellow,'currentcolor':null,'blink':false}
     ]
 }
 // console.log(setbuttons.buttons)
@@ -68,11 +68,29 @@ buttoncolorer()
                     }
 
                     if(element.name == 'blinktest'){
-                        setInterval(switchcolor, 1000, k, element)
+                    const blinktest = new TaskTimer(1000);
+
+
+                        if(element.blink == false){
+                            blinktest.on('tick', () => {
+                                switchcolor(k, element) 
+                                console.log(blinktest.tickCount)
+                                console.log('element blink ' + element.blink)
+                            })
+                            blinktest.start()
+                            
+                            element.blink = true
+                        } else {
+                            blinktest.remove()
+                            element.blink = false
+                            console.log('element blink ' + element.blink)
+                        }
+
+                        
                     }
 
                     if(element.name == 'blink2'){
-                        setInterval(switchcolor, 100, k, element)
+                        // setInterval(switchcolor, 100, k, element)
                     }
                 ///////////////////////////////////////////////
                 }
@@ -108,14 +126,16 @@ buttoncolorer()
             // console.log(k)
             // console.log(element)
             // console.log(pad.col(k))
-            console.log(k, element)
+            // console.log(k, element)
 
             if(element.currentcolor == element.color) {
                 pad.col(element.blink, k)
+                console.log(k + ' color 2')
                 element.currentcolor = element.blink
             } else {
                 pad.col(element.color, k)
                 element.currentcolor = element.color
+                console.log(k + ' color 1')
             }
         }
 
