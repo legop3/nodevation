@@ -5,12 +5,12 @@ var cron = require('node-cron')
 
 const setbuttons = {
     'buttonset':[
-        {'x':0, 'y':7, 'name':'testing', 'color':pad.yellow,'blink':pad.yellow.low},
-        {'x':0, 'y':6, 'name':'notesting', 'color':pad.green.low,'blink':pad.green},
-        {'x':6,'y':7,'name':'deafen','color':pad.red,'blink':pad.red.low},
-        {'x':6,'y':6,'name':'mute','color':pad.red,'blink':pad.red.low},
-        {'x':5,'y':7,'name':'tempdeafen','color':pad.red.low,'blink':pad.red},
-        {'x':5,'y':6,'name':'tempmute','color':pad.red.low,'blink':pad.red}
+        {'x':0, 'y':7, 'name':'blinktest', 'color':pad.yellow,'blink':pad.yellow.low,'currentcolor':null},
+        {'x':0, 'y':6, 'name':'notesting', 'color':pad.green.low,'blink':pad.green,'currentcolor':null},
+        {'x':6,'y':7,'name':'deafen','color':pad.red,'blink':pad.green,'currentcolor':null},
+        {'x':6,'y':6,'name':'mute','color':pad.red,'blink':pad.green,'currentcolor':null},
+        {'x':5,'y':7,'name':'tempdeafen','color':pad.red.low,'blink':pad.yellow,'currentcolor':null},
+        {'x':5,'y':6,'name':'tempmute','color':pad.red.low,'blink':pad.yellow,'currentcolor':null}
     ]
 }
 // console.log(setbuttons.buttons)
@@ -34,10 +34,17 @@ pad.connect().then( () => {     // Auto-detect Launchpad
     // ])
     //    pad.col(1,1,pad.red)
 
+function buttoncolorer() {
     setbuttons.buttonset.forEach(element => {
-        console.log(element)
+        // console.log(element)
         pad.col(element.color, [element.x, element.y])
+        element.currentcolor = element.color
+        console.log(element.currentcolor)
     });
+}
+buttoncolorer()
+
+
 
 
     pad.on( 'key', k => {
@@ -48,32 +55,76 @@ pad.connect().then( () => {     // Auto-detect Launchpad
                 console.log(element.name)
 
 
-                if(k.pressed) {
+                if(k.pressed) { //runs when you down the button
+                ///////////////////////////////////////////////
                     if(element.name == 'mute'){
                         get("http://localhost:6969/mute")
+                        switchcolor(k, element)
                     }
 
                     if(element.name == 'deafen'){
                         get("http://localhost:6969/deafen")
+                        switchcolor(k, element)
                     }
+                ///////////////////////////////////////////////
+                }
+
+
+                if(!k.pressed) { //runs when you up the button
+                //////////////////////////////////////////////
+                    
+                //////////////////////////////////////////////
                 }
 
 
 
 
-
+                //runs when you up or down the button
+                //////////////////////////////////////////////
                 if(element.name == 'tempmute'){
                     get("http://localhost:6969/mute")
+                    // pad.col(element.blink, k)
+                    switchcolor(k, element)
                 }
 
                 if(element.name == 'tempdeafen'){
                     get("http://localhost:6969/deafen")
+                    switchcolor(k, element)
                 }
+                //////////////////////////////////////////////
             }
         })
 
 
+        function switchcolor(k, element) {
+            // console.log(k)
+            // console.log(element)
+            // console.log(pad.col(k))
+            console.log(k)
 
+            if(element.currentcolor == element.color) {
+                pad.col(element.blink, k)
+                element.currentcolor = element.blink
+            } else {
+                pad.col(element.color, k)
+                element.currentcolor = element.color
+            }
+
+        
+
+        function blinker(k, element, timeout, enable) {
+            if(enable == true){
+                setTimeout(() => {
+                
+                }, timeout);
+            }
+
+        }
+
+
+        
+            
+        }
 
 
 
