@@ -4,6 +4,8 @@ pad = new Launchpad();
 const { TaskTimer } = require('tasktimer')
 
 const setbuttons = {
+    //add new buttons here, keep nulls as null.
+    //{button's x, button's y, button's first color, button's second or "blink" color, button's current color, button's blinking state, button's blinker element}
     'buttonset':[
         {'x':0, 'y':7, 'name':'blinktest', 'color':pad.yellow,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':0, 'y':6, 'name':'blink2', 'color':pad.green.low,'blink':pad.green,'currentcolor':null,'blinking':false,'blinker':null},
@@ -13,30 +15,11 @@ const setbuttons = {
         {'x':5,'y':6,'name':'tempmute','color':pad.red.low,'blink':pad.yellow,'currentcolor':null,'blinking':false}
     ]
 }
-// console.log(setbuttons.buttons)
-
-
-
-
 pad.on( 'connect', () => console.log( 'Launchpad connected!' ) );
 pad.connect().then( () => {     // Auto-detect Launchpad
-    // pad.reset(3)
-    pad.reset(0)
-    // pad.writeBuffer = 0
-    // pad.setColors([
-    //     [6,6,pad.red],
-    //     [6,7,pad.red]
-    // ]);
-    // pad.writeBuffer = 1
-    // pad.setColors([
-    //     [6,6,pad.red.low],
-    //     [6,7,pad.red.low]
-    // ])
-    //    pad.col(1,1,pad.red)
-
+pad.reset(0)
 function buttoncolorer() {
     setbuttons.buttonset.forEach(element => {
-        // console.log(element)
         pad.col(element.color, [element.x, element.y])
         element.currentcolor = element.color
         console.log(element.currentcolor)
