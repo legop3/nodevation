@@ -1,18 +1,21 @@
 const { get } = require('http');
 const Launchpad = require( 'launchpad-mini' ),
 pad = new Launchpad();
-const { TaskTimer } = require('tasktimer')
-
+var cp = require('child_process')
+const { exec, execSync } = require("child_process");
 const setbuttons = {
     //add new buttons here, keep nulls as null.
     //{button's x, button's y, button's first color, button's second or "blink" color, button's current color, button's blinking state, button's blinker element}
     'buttonset':[
-        {'x':0, 'y':7, 'name':'blinktest', 'color':pad.yellow,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
-        {'x':0, 'y':6, 'name':'blink2', 'color':pad.green.low,'blink':pad.green,'currentcolor':null,'blinking':false,'blinker':null},
+        // {'x':0, 'y':7, 'name':'blinktest', 'color':pad.yellow,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
+        // {'x':0, 'y':6, 'name':'blink2', 'color':pad.green.low,'blink':pad.green,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':6,'y':7,'name':'deafen','color':pad.red,'blink':pad.green,'currentcolor':null,'blinking':false},
         {'x':6,'y':6,'name':'mute','color':pad.red,'blink':pad.green,'currentcolor':null,'blinking':false},
         {'x':5,'y':7,'name':'tempdeafen','color':pad.red.low,'blink':pad.yellow,'currentcolor':null,'blinking':false},
-        {'x':5,'y':6,'name':'tempmute','color':pad.red.low,'blink':pad.yellow,'currentcolor':null,'blinking':false}
+        {'x':5,'y':6,'name':'tempmute','color':pad.red.low,'blink':pad.yellow,'currentcolor':null,'blinking':false},
+        {'x':4,'y':0,'name':'chrome','color':pad.amber,'blink':pad.amber.low,'currentcolor':null,'blinking':false,'blinker':null}
+
+
     ]
 }
 pad.on( 'connect', () => console.log( 'Launchpad connected!' ) );
@@ -50,15 +53,21 @@ buttoncolorer()
                         switchcolor(k, element)
                     }
 
-                    if(element.name == 'blinktest'){
-                        var time = 1000
-                        toggleblink(k, element, time)
+                    // if(element.name == 'blinktest'){
+                    //     var time = 1000
+                    //     toggleblink(k, element, time)
+                    // }
+
+
+                    if(element.name == 'chrome'){
+                        // execFile('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe --profile-directory="Default"')
+                        // cp.spawn('c:\\Program Files\\Google\\Chrome\\Application\\chrome.exe');
+                        exec('"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"', '--profile-directory="Default"', function(err, data) {
+                            if(err){console.log(err)}
+                            console.log(data.toString())
+                        })
                     }
 
-                    if(element.name == 'blink2'){
-                        var time = 100
-                        toggleblink(k, element, time)
-                    }
                 ///////////////////////////////////////////////
                 }
 
