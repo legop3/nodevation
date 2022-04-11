@@ -16,7 +16,10 @@ const setbuttons = {
         {'x':4,'y':1,'name':'chrome2','color':pad.amber,'blink':pad.green,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':5,'y':5,'name':'skip','color':pad.green,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':5,'y':4,'name':'play','color':pad.green,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null},
-        {'x':5,'y':3,'name':'back','color':pad.green,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null}
+        {'x':5,'y':3,'name':'back','color':pad.green,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':8,'y':5,'name':'wintab','color':pad.red.low,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':8,'y':6,'name':'prevdesk','color':pad.yellow,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':8,'y':7,'name':'nextdesk','color':pad.yellow,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null}
 
 
     ]
@@ -41,9 +44,7 @@ buttoncolorer()
         setbuttons.buttonset.forEach(element => {
             if(k.x == element.x && k.y == element.y){
                 console.log(element.name)
-
-
-
+                
                 //runs when you up or down the button
                 //////////////////////////////////////////////
                 if(element.name == 'tempmute'){
@@ -65,10 +66,9 @@ buttoncolorer()
                 }
                 
 
-                
+                //music stuff/////////////////////////////////////
                 if(element.name == 'skip'){switchcolor(k, element)}   
-                if(element.name == 'play'){switchcolor(k, element)}       
-                if(element.name == 'pause'){switchcolor(k, element)}                
+                if(element.name == 'play'){switchcolor(k, element)}              
                 if(element.name == 'back'){switchcolor(k, element)}
                 //////////////////////////////////////////////
 
@@ -94,17 +94,14 @@ buttoncolorer()
                         robot.keyTap("3", ["command"])
                     }
 
+                    if(element.name == 'wintab'){robot.keyTap("tab", ["command"])}
+                    if(element.name == 'prevdesk'){robot.keyTap("left", ["command", "control"])}
+                    if(element.name == 'nextdesk'){robot.keyTap("right", ["command", "control"])}
 
-                    //music stuff                   //
-                    if(element.name == 'skip'){     //
-                        robot.keyTap("audio_next")  //
-                    }                               //
-                    if(element.name == 'play'){     //
-                        robot.keyTap("audio_play")  //
-                    }                               //
-                    if(element.name == 'back'){     //
-                        robot.keyTap("audio_prev")  //
-                    }                               //
+                    //music stuff/////////////////////////////////////////
+                    if(element.name == 'skip'){robot.keyTap("audio_next")}                               
+                    if(element.name == 'play'){robot.keyTap("audio_play")}                               
+                    if(element.name == 'back'){robot.keyTap("audio_prev")}                               
 
                 ///////////////////////////////////////////////
                 }
