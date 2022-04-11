@@ -2,7 +2,8 @@ const { get } = require('http');
 const Launchpad = require( 'launchpad-mini' ),
 pad = new Launchpad();
 var cp = require('child_process')
-const { exec, execSync } = require("child_process");
+// const { exec, execSync } = require("child_process");
+var ks = require('node-key-sender')
 const setbuttons = {
     //add new buttons here, keep nulls as null.
     //{button's x, button's y, button's first color, button's second or "blink" color, button's current color, button's blinking state, button's blinker element}
@@ -62,10 +63,11 @@ buttoncolorer()
                     if(element.name == 'chrome'){
                         // execFile('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe --profile-directory="Default"')
                         // cp.spawn('c:\\Program Files\\Google\\Chrome\\Application\\chrome.exe');
-                        exec('"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"', '--profile-directory="Default"', function(err, data) {
-                            if(err){console.log(err)}
-                            console.log(data.toString())
-                        })
+                        // exec('"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"', '--profile-directory="Default"', function(err, data) {
+                        //     if(err){console.log(err)}
+                        //     console.log(data.toString())
+                        // })
+                        ks.sendCombination(['meta', '1'])
                     }
 
                 ///////////////////////////////////////////////
