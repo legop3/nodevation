@@ -3,6 +3,7 @@ const Launchpad = require( 'launchpad-mini' ),
 pad = new Launchpad();
 var cp = require('child_process')
 var robot = require('robotjs')
+const open = require('open');
 const setbuttons = {
     //add new buttons here, keep nulls as null.
     //{button's x, button's y, button's first color, button's second or "blink" color, button's current color, button's blinking state, button's blinker element}
@@ -12,14 +13,21 @@ const setbuttons = {
         {'x':6,'y':6,'name':'mute','color':pad.red,'blink':pad.green,'currentcolor':null,'blinking':false},
         {'x':5,'y':7,'name':'tempdeafen','color':pad.red.low,'blink':pad.yellow,'currentcolor':null,'blinking':false},
         {'x':5,'y':6,'name':'tempmute','color':pad.red.low,'blink':pad.yellow,'currentcolor':null,'blinking':false},
-        {'x':4,'y':0,'name':'chrome1','color':pad.amber,'blink':pad.green,'currentcolor':null,'blinking':false,'blinker':null},
-        {'x':4,'y':1,'name':'chrome2','color':pad.amber,'blink':pad.green,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':4,'y':2,'name':'chrome1','color':pad.amber,'blink':pad.green,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':4,'y':3,'name':'chrome2','color':pad.yellow,'blink':pad.green,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':5,'y':5,'name':'skip','color':pad.green,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':5,'y':4,'name':'play','color':pad.green,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':5,'y':3,'name':'back','color':pad.green,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':8,'y':5,'name':'wintab','color':pad.red.low,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':8,'y':6,'name':'prevdesk','color':pad.yellow,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
-        {'x':8,'y':7,'name':'nextdesk','color':pad.yellow,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null}
+        {'x':8,'y':7,'name':'nextdesk','color':pad.yellow,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':3,'y':2,'name':'youtube','color':pad.red,'blink':pad.red.low,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':2,'y':2,'name':'reddit','color':pad.amber,'blink':pad.amber.low,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':1,'y':5,'name':'closetab','color':pad.red.low,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':1,'y':4,'name':'nexttab','color':pad.green.low,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':1,'y':3,'name':'prevtab','color':pad.green.low,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':3,'y':4,'name':'altf4','color':pad.red,'blink':pad.green,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':4,'y':4,'name':'spotify','color':pad.green,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null}
 
 
     ]
@@ -57,14 +65,16 @@ buttoncolorer()
                     switchcolor(k, element)
                 }
 
-                if(element.name == 'chrome1'){
-                    switchcolor(k, element)
-                }
-                
-                if(element.name == 'chrome2'){
-                    switchcolor(k, element)
-                }
-                
+                if(element.name == 'chrome1'){switchcolor(k, element)}
+                if(element.name == 'chrome2'){switchcolor(k, element)}
+                if(element.name == 'youtube'){switchcolor(k, element)}
+                if(element.name == 'reddit'){switchcolor(k, element)}
+                if(element.name == 'closetab'){switchcolor(k, element)}
+                if(element.name == 'altf4'){switchcolor(k, element)}
+                if(element.name == 'nexttab'){switchcolor(k, element)}
+                if(element.name == 'prevtab'){switchcolor(k, element)}
+                if(element.name == 'spotify'){switchcolor(k, element)}
+
 
                 //music stuff/////////////////////////////////////
                 if(element.name == 'skip'){switchcolor(k, element)}   
@@ -92,8 +102,25 @@ buttoncolorer()
 
                     if(element.name == 'chrome2'){
                         robot.keyTap("3", ["command"])
+                    }                    
+                    
+                    if(element.name == 'spotify'){
+                        robot.keyTap("5", ["command"])
                     }
 
+
+
+                    if(element.name == 'youtube'){open('https://youtube.com');}
+                    if(element.name == 'reddit'){open('https://reddit.com');}
+                    if(element.name == 'closetab'){robot.keyTap("w", ["control"])}
+                    if(element.name == 'nexttab'){robot.keyTap("tab", ["control"])}
+                    if(element.name == 'prevtab'){robot.keyTap("tab", ["control", "shift"])}
+
+
+
+
+
+                    //virtual desktop switching//////////////////////////////////////////////////
                     if(element.name == 'wintab'){robot.keyTap("tab", ["command"])}
                     if(element.name == 'prevdesk'){robot.keyTap("left", ["command", "control"])}
                     if(element.name == 'nextdesk'){robot.keyTap("right", ["command", "control"])}
@@ -101,7 +128,12 @@ buttoncolorer()
                     //music stuff/////////////////////////////////////////
                     if(element.name == 'skip'){robot.keyTap("audio_next")}                               
                     if(element.name == 'play'){robot.keyTap("audio_play")}                               
-                    if(element.name == 'back'){robot.keyTap("audio_prev")}                               
+                    if(element.name == 'back'){robot.keyTap("audio_prev")}
+                    
+                    if(element.name == 'altf4'){robot.keyTap("f4", ["alt"])}
+
+
+
 
                 ///////////////////////////////////////////////
                 }
