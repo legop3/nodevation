@@ -27,7 +27,10 @@ const setbuttons = {
         {'x':1,'y':4,'name':'nexttab','color':pad.green.low,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':1,'y':3,'name':'prevtab','color':pad.green.low,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':3,'y':4,'name':'altf4','color':pad.red,'blink':pad.green,'currentcolor':null,'blinking':false,'blinker':null},
-        {'x':4,'y':4,'name':'spotify','color':pad.green,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null}
+        {'x':4,'y':4,'name':'spotify','color':pad.green,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':3,'y':8,'name':'volumeup','color':pad.green,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':2,'y':8,'name':'volumedown','color':pad.green,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':2,'y':0,'name':'volumemute','color':pad.red,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null}
 
 
     ]
@@ -131,6 +134,9 @@ buttoncolorer()
                     if(element.name == 'back'){robot.keyTap("audio_prev")}
                     
                     if(element.name == 'altf4'){robot.keyTap("f4", ["alt"])}
+                    if(element.name == 'volumeup'){robot.keyTap("audio_vol_up")}
+                    if(element.name == 'volumedown'){robot.keyTap("audio_vol_down")}
+                    if(element.name == 'volumemute'){robot.keyTap("audio_mute")}
 
 
 
