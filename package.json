@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "delay": "^5.0.0",
     "launchpad-mini": "^2.3.3",
     "node-cron": "^3.0.0",
     "node-key-sender": "^1.0.11",

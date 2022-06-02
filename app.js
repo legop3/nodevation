@@ -4,6 +4,7 @@ pad = new Launchpad();
 var cp = require('child_process')
 var robot = require('robotjs')
 const open = require('open');
+const delay = require('delay');
 const setbuttons = {
     //add new buttons here, keep nulls as null.
     //{button's x, button's y, button's first color, button's second or "blink" color, button's current color, button's blinking state, button's blinker element}
@@ -37,7 +38,31 @@ const setbuttons = {
 }
 pad.on( 'connect', () => console.log( 'Launchpad connected!' ) );
 pad.connect().then( () => {     // Auto-detect Launchpad
-pad.reset(0)
+pad.reset(0);
+
+
+(async () => {
+
+    while(true){
+        pad.col(pad.off, [7,5])
+        pad.col(pad.red, [7,3])
+        await delay(300);
+        pad.col(pad.off, [7,3])
+        pad.col(pad.yellow, [7,4])
+        await delay(300)
+        pad.col(pad.off, [7,4])
+        pad.col(pad.red, [7,5])
+        await delay(300)
+    }
+
+
+
+})();
+
+
+
+
+
 function buttoncolorer() {
     setbuttons.buttonset.forEach(element => {
         pad.col(element.color, [element.x, element.y])
@@ -46,6 +71,12 @@ function buttoncolorer() {
     });
 }
 buttoncolorer()
+
+
+
+
+
+
 
 
 
@@ -153,8 +184,6 @@ buttoncolorer()
                 }
             }
         })
-
-
 
 
 
