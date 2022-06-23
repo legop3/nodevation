@@ -5,6 +5,12 @@ var cp = require('child_process')
 var robot = require('robotjs')
 const open = require('open');
 const delay = require('delay');
+
+
+var wait = 50
+
+
+
 const setbuttons = {
     //add new buttons here, keep nulls as null.
     //{button's x, button's y, button's first color, button's second or "blink" color, button's current color, button's blinking state, button's blinker element}
@@ -31,7 +37,11 @@ const setbuttons = {
         {'x':4,'y':4,'name':'spotify','color':pad.green,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':3,'y':8,'name':'volumeup','color':pad.green,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':2,'y':8,'name':'volumedown','color':pad.green,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
-        {'x':2,'y':0,'name':'volumemute','color':pad.red,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null}
+        {'x':2,'y':0,'name':'volumemute','color':pad.red,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':0,'y':6,'name':'speeddown','color':pad.red,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':0,'y':7,'name':'speedup','color':pad.green,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null}
+
+
 
 
     ]
@@ -40,19 +50,33 @@ pad.on( 'connect', () => console.log( 'Launchpad connected!' ) );
 pad.connect().then( () => {     // Auto-detect Launchpad
 pad.reset(0);
 
-
 (async () => {
 
     while(true){
-        pad.col(pad.off, [7,5])
-        pad.col(pad.red, [7,3])
-        await delay(300);
+        pad.col(pad.off, [7,7])
+        pad.col(pad.green, [7,0])
+        await delay(wait);
+        pad.col(pad.off, [7,0])
+        pad.col(pad.green, [7,1])
+        await delay(wait);
+        pad.col(pad.off, [7,1])
+        pad.col(pad.green, [7,2])
+        await delay(wait);
+        pad.col(pad.off, [7,2])
+        pad.col(pad.green, [7,3])
+        await delay(wait);
         pad.col(pad.off, [7,3])
-        pad.col(pad.yellow, [7,4])
-        await delay(300)
+        pad.col(pad.green, [7,4])
+        await delay(wait)
         pad.col(pad.off, [7,4])
-        pad.col(pad.red, [7,5])
-        await delay(300)
+        pad.col(pad.green, [7,5])
+        await delay(wait)
+        pad.col(pad.off, [7,5])
+        pad.col(pad.green, [7,6])
+        await delay(wait)
+        pad.col(pad.off, [7,6])
+        pad.col(pad.green, [7,7])
+        await delay(wait)
     }
 
 
@@ -168,7 +192,9 @@ buttoncolorer()
                     if(element.name == 'volumeup'){robot.keyTap("audio_vol_up")}
                     if(element.name == 'volumedown'){robot.keyTap("audio_vol_down")}
                     if(element.name == 'volumemute'){robot.keyTap("audio_mute")}
-
+                    //blinking light speed
+                    if(element.name == 'speedup'){wait = wait - 10; console.log(wait)}
+                    if(element.name == 'speeddown'){wait = wait + 10; console.log(wait)}
 
 
 
