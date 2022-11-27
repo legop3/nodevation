@@ -5,11 +5,9 @@ var cp = require('child_process')
 var robot = require('robotjs')
 const open = require('open');
 const delay = require('delay');
-
+const displayRotationWindows = require('display-rotation-windows');
 
 var wait = 50
-
-
 
 const setbuttons = {
     //add new buttons here, keep nulls as null.
@@ -39,7 +37,10 @@ const setbuttons = {
         {'x':2,'y':8,'name':'volumedown','color':pad.green,'blink':pad.red,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':2,'y':0,'name':'volumemute','color':pad.red,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null},
         {'x':0,'y':6,'name':'speeddown','color':pad.red,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null},
-        {'x':0,'y':7,'name':'speedup','color':pad.green,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null}
+        {'x':0,'y':7,'name':'speedup','color':pad.green,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':3,'y':6,'name':'rotatevertical','color':pad.yellow,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null},
+        {'x':3,'y':7,'name':'rotatehorizontal','color':pad.yellow,'blink':pad.yellow,'currentcolor':null,'blinking':false,'blinker':null}
+        // {'x':3,'y':5,'name':'lock','color':pad.yellow,'blink':pad.green,'currentcolor':null,'blinking':false,'blinker':null}
 
 
 
@@ -173,6 +174,7 @@ buttoncolorer()
                     if(element.name == 'closetab'){robot.keyTap("w", ["control"])}
                     if(element.name == 'nexttab'){robot.keyTap("tab", ["control"])}
                     if(element.name == 'prevtab'){robot.keyTap("tab", ["control", "shift"])}
+                    // if(element.name == 'lock'){robot.keyTap("l", ["command"])}
 
 
 
@@ -195,6 +197,10 @@ buttoncolorer()
                     //blinking light speed
                     if(element.name == 'speedup'){wait = wait - 10; console.log(wait)}
                     if(element.name == 'speeddown'){wait = wait + 10; console.log(wait)}
+
+                    //screen rotation
+                    if(element.name == 'rotatevertical'){displayRotationWindows.rotateCCW()}
+                    if(element.name == 'rotatehorizontal'){displayRotationWindows.rotateCW()}
 
 
 
